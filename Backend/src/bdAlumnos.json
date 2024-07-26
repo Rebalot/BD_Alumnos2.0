@@ -1,0 +1,174 @@
+{
+  "alumnos": [
+    {
+      "matricula": "0001",
+      "nombre": "Alberto",
+      "apellido1": "Alcocer",
+      "apellido2": "Espinosa",
+      "fechaNacimiento": "1980-08-29",
+      "edad": 43,
+      "grupo": "",
+      "materias": [],
+      "calificaciones": {}
+    },
+    {
+      "matricula": "0005",
+      "nombre": "Elena",
+      "apellido1": "González",
+      "apellido2": "Romero",
+      "fechaNacimiento": "1989-02-21",
+      "edad": 35,
+      "grupo": "",
+      "materias": [],
+      "calificaciones": {}
+    },
+    {
+      "matricula": "0006",
+      "nombre": "Laura",
+      "apellido1": "Romero",
+      "apellido2": "Sánchez",
+      "fechaNacimiento": "1997-12-10",
+      "edad": 26,
+      "grupo": "",
+      "materias": [],
+      "calificaciones": {}
+    },
+    {
+      "matricula": "0007",
+      "nombre": "Pablo",
+      "apellido1": "Martínez",
+      "apellido2": "Martínez",
+      "fechaNacimiento": "2005-08-25",
+      "edad": 18,
+      "grupo": "",
+      "materias": [],
+      "calificaciones": {}
+    },
+    {
+      "matricula": "0008",
+      "nombre": "Rosa",
+      "apellido1": "Hernandez",
+      "apellido2": "Sanchez",
+      "fechaNacimiento": "1997-04-15",
+      "edad": 27,
+      "grupo": "",
+      "materias": [],
+      "calificaciones": {}
+    },
+    {
+      "matricula": "0009",
+      "nombre": "Juan",
+      "apellido1": "Pérez",
+      "apellido2": "Martínez",
+      "fechaNacimiento": "1997-09-11",
+      "edad": 26,
+      "grupo": "",
+      "materias": [],
+      "calificaciones": {}
+    },
+    {
+      "matricula": "0010",
+      "nombre": "Pedro",
+      "apellido1": "Díaz",
+      "apellido2": "López",
+      "fechaNacimiento": "1998-01-04",
+      "edad": 26,
+      "grupo": "",
+      "materias": [],
+      "calificaciones": {}
+    },
+    {
+      "matricula": "0011",
+      "nombre": "Juan",
+      "apellido1": "González",
+      "apellido2": "Sánchez",
+      "fechaNacimiento": "2000-06-08",
+      "edad": 24,
+      "grupo": "",
+      "materias": [],
+      "calificaciones": {}
+    },
+    {
+      "matricula": "0012",
+      "nombre": "Laura",
+      "apellido1": "Pérez",
+      "apellido2": "Romero",
+      "fechaNacimiento": "1999-12-04",
+      "edad": 24,
+      "grupo": "",
+      "materias": [],
+      "calificaciones": {}
+    },
+    {
+      "matricula": "0013",
+      "nombre": "Laura",
+      "apellido1": "González",
+      "apellido2": "Sánchez",
+      "fechaNacimiento": "2000-03-07",
+      "edad": 24,
+      "grupo": "",
+      "materias": [],
+      "calificaciones": {}
+    },
+    {
+      "matricula": "0014",
+      "nombre": "Pedro",
+      "apellido1": "Martínez",
+      "apellido2": "Fernández",
+      "fechaNacimiento": "2003-09-25",
+      "edad": 20,
+      "grupo": "",
+      "materias": [],
+      "calificaciones": {}
+    },
+    {
+      "matricula": "0015",
+      "nombre": "Laura",
+      "apellido1": "Sánchez",
+      "apellido2": "Díaz",
+      "fechaNacimiento": "1980-04-01",
+      "edad": 44,
+      "grupo": "",
+      "materias": [],
+      "calificaciones": {}
+    },
+    {
+      "matricula": "0016",
+      "nombre": "Carlos",
+      "apellido1": "Martínez",
+      "apellido2": "González",
+      "fechaNacimiento": "1986-06-08",
+      "edad": 38,
+      "grupo": "",
+      "materias": [],
+      "calificaciones": {}
+    }
+  ],
+  "grupos": [
+    {
+      "nombre": "A",
+      "alumnos": [],
+      "length": 0
+    },
+    {
+      "nombre": "B",
+      "alumnos": [],
+      "length": 0
+    },
+    {
+      "nombre": "C",
+      "alumnos": [],
+      "length": 0
+    },
+    {
+      "nombre": "D",
+      "alumnos": [],
+      "length": 0
+    },
+    {
+      "nombre": "E",
+      "alumnos": [],
+      "length": 0
+    }
+  ]
+}

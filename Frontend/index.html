@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EE Portal</title>
+    <link rel="icon" href="images/EduIconLogo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <a class="navbar-brand" href="#">
+            <img src="images/EE-Logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            EduEnginner
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navTabs" aria-controls="navTabs" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navTabs">
+            <ul class="navbar-nav mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Inicio</a>
+                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Alumnos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Grupos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Materias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Calificaciones</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main>
+        <div id="Inicio" class="tab-content">
+            <h1>BIENVENIDO (MAESTRO)</h1>
+        </div>
+        <div id="Alumnos" class="tab-content hide">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h1>BASE DE DATOS ALUMNOS</h1>
+                <button id="generarAlumnoAleatorio" style="height: 40px; box-sizing: border-box; padding: 5px;">Generar alumno aleatorio</button>
+            </div>
+            
+            <!-- <div class="mensajeConfirmacion hide">
+                <div class="confirmar">
+                    <p>Desea confirmar la operación?</p>
+                    <div class="confirmar_btns">
+                        <button>Eliminar</button>
+                        <button>Cancelar</button>
+                    </div>
+                </div>
+            </div> -->
+
+            <section class="tabla_buscador">
+                <div class="busqueda_filtro">
+                    <div class="busqueda">
+                        <div class="busqueda_icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(156 163 175)" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
+                        </div>
+                        <input type="text" placeholder="Search" required="">
+                    </div>
+                    <div class="filter">
+                        <button class="btn-custom" type="button" id="filtro" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(156 163 175)" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+                                <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
+                            </svg>
+                            Filter
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(156 163 175)" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div class="filtro_categoria">
+                                <h6>
+                                    Category
+                                </h6>
+                                <ul>
+                                <li>
+                                    <input id="apple" type="checkbox" value=""/>
+                                    <label for="apple">
+                                    Apple (56)
+                                    </label>
+                                </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="agregar_acciones">
+                    <div class="agregar_alumno">
+                        <button class="btn-custom" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
+                            </svg>
+                            Agregar alumno
+                        </button>
+                    </div>
+                    <div class="acciones">
+                        <button class="btn-custom" type="button" id="acciones" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(156 163 175)" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+                            </svg>
+                            Acciones
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a>Selección múltiple</a>
+                            <div class="acciones_division">
+                                <a>
+                                    Eliminar todos
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+            <section class="agregar_alumno_datos hide">
+                <form id="form_agregarAlumno">
+                    <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <label for="nombre_alumno">Nombre(s)</label>
+                        <input type="text" class="form-control" id="nombre_alumno" name="nombre_alumno" placeholder="Nombre(s)" value="" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="apellidopat_alumno">Apellido paterno</label>
+                        <input type="text" class="form-control" id="apellidopat_alumno" name="primeraApellido_alumno" placeholder="Primer apellido" value="" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="apellidomat_alumno">Apellido materno</label>
+                        <input type="text" class="form-control" id="apellidomat_alumno" name="segundoApellido_alumno" placeholder="Segundo apellido" value="" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="fechanaci_alumno">Fecha de nacimiento</label>
+                        <input type="date" class="form-control" id="fechanaci_alumno" name="fechaNacimiento_alumno" placeholder="dd-mm-yyyy" required>
+                    </div>
+                    </div>
+                    <button class="btn btn-primary" id="agregar_alumno" type="submit">Agregar</button>
+                </form>
+            </section>
+            <section class="tabla_alumnos">
+                <table class="table table-hover table-dark" id="tabla_alumnos">
+                <thead>
+                    <tr style="
+                    border-bottom: 3px solid white; border-top: 3px solid white;">
+                    <th scope="col" class="align-middle"># Matricula</th>
+                    <th scope="col" class="align-middle">Nombre(s)</th>
+                    <th scope="col" class="align-middle">Primer apellido</th>
+                    <th scope="col" class="align-middle">Segundo apellido</th>
+                    <th scope="col" class="align-middle">Fecha de nacimiento <br>(AAAA/MM/DD)</th>
+                    <th scope="col" class="align-middle">Edad</th>
+                    <th scope="col" class="align-middle">Grupo</th>
+                    <th scope="col" class="align-middle">Materias</th>
+                    <th scope="col" class="align-middle">Calificaciones</th>
+                    <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aqui se insertan los nuevos alumnos. Ej. de estructura -->
+                    <!-- <tr row_id='${matriculaGenerada}'>
+                <th scope="row" class="row_data align-middle" col_name="matricula">${matriculaGenerada}</th>
+                <td class="row_data align-middle" col_name="nombre">${nombre}</td>
+                <td class="row_data align-middle" col_name="apellido1">${apellido1}</td>
+                <td class="row_data align-middle" col_name="apellido2">${apellido2}</td>
+                <td class="row_data align-middle" col_name="fechaNaci">${fechaNaci}</td>
+                <td class="align-middle" col_name="edad">${edadCalculada}</td>
+                <td class="align-middle" col_name="grupo"><a href="">N/A</a></td>
+                <td class="align-middle" col_name="materias"><a href="">N/A</a></td>
+                <td class="align-middle" col_name="calificaciones"><a href="">N/A</a></td>
+                <td class="row_edit">
+                    <div>
+                        <span class="btn_edit">
+                            <a href="#" class="btn btn-link btn_edit" row_id='${matriculaGenerada}'> Edit</a>
+                        </span>
+                        <span class="btn_save" style="display: none;">
+                            <a href="#" class="btn btn-link btn_save" row_id='${matriculaGenerada}'> Save</a>
+                        </span>
+                        <span class="btn_cancel" style="display: none;">
+                            <a href="#" class="btn btn-link btn_cancel" row_id='${matriculaGenerada}'> Cancel</a>
+                        </span>
+                    </div>
+                    <div class="btn_delete_contenedor">
+                        <span class="btn_delete">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="rgb(160, 178, 192)" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                        </svg>
+                        </span>
+                    </div>
+                </td>
+            </tr> -->
+                </tbody>
+                </table>
+            </section>
+        </div>
+        <div id="Grupos" class="tab-content hide">
+            <header>
+                <h1>GRUPOS</h1>
+                <div class="botones_sup">
+                    <div class="crearGrupo_contenedor">
+                        <button id="crearGrupoBtn_sup">
+                            <div class="btn_estado estado1">
+                                <div class="btnGrupo_icons">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                                        <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                    </svg>
+                                </div>
+                                Crear grupo
+                            </div>
+                            <div class="btn_estado estado2 hide">
+                                <div class="btnGrupo_icons">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                                        <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                    </svg>
+                                </div>
+                                Crear grupo
+                            </div>
+                        </button>
+                        <div class="selectorCrear hide">
+                            <div class="selector_letraGrupo">
+                                <label for="letras">Grupo: </label>
+                                <select id="letras">
+                                    <option value="">-</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    <option value="E">E</option>
+                                    <option value="F">F</option>
+                                    <option value="G">G</option>
+                                    <option value="H">H</option>
+                                    <option value="I">I</option>
+                                    <option value="J">J</option>
+                                    <option value="K">K</option>
+                                    <option value="L">L</option>
+                                    <option value="M">M</option>
+                                    <option value="N">N</option>
+                                    <option value="O">O</option>
+                                    <option value="P">P</option>
+                                    <option value="Q">Q</option>
+                                    <option value="R">R</option>
+                                    <option value="S">S</option>
+                                    <option value="T">T</option>
+                                    <option value="U">U</option>
+                                    <option value="V">V</option>
+                                    <option value="W">W</option>
+                                    <option value="X">X</option>
+                                    <option value="Y">Y</option>
+                                    <option value="Z">Z</option>
+                                </select>
+                            </div>
+                            <button id="agregarGrupoBtn_first">
+                                <div class="btn_estado estado1">
+                                    <div class="btnGrupo_icons">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                        </svg>
+                                    </div>
+                                    Agregar
+                                </div>
+                            </button> 
+                        </div>
+                    </div>
+                    
+                    <button id="eliminarGrupoBtn_sup">
+                        <div class="btn_estado estado1">
+                            <div class="btnGrupo_icons">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
+                                </svg>
+                            </div>
+                            Eliminar grupo
+                        </div>
+                        <div class="btn_estado estado2 hide">
+                            Cancelar
+                        </div>
+                    </button>
+                </div>
+            </header>
+            
+            <section class="grupoUnderline">
+                <div class="crearGrupo_noExiste_label hidden">
+                    <p>No existe ningún grupo.</p>
+                </div>
+                <button id="cancelarRegresarBtn" class="hidden">
+                    <div class="btn_estado estado1">
+                        <div class="btnGrupo_icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5"/>
+                            </svg>
+                        </div>
+                        Regresar
+                    </div>
+                </button>
+            </section>
+            <section class="grupos">
+                <div class="grupos_grid">
+                    <!-- Grupos agregados dinámicamente -->
+        
+                </div>
+                <div class="grupo_informacion hide">
+                    <h2>Información</h2>
+                    <div class="alumnosSinGrupo">
+                        <h5>Alumnos sin grupo asignado:</h5>
+                        <ul class="alumnosSinGrupo_lista">
+                            <li>
+                                <div class="listaGrupo_input">
+                                    <input type="checkbox" name="alumnosSinGrupo" id="alumno1" value="1">
+                                </div>
+                                <div class="listaGrupo_label">
+                                    <label for="alumno1">Alumno 1Alumno 1Alumno 1</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="listaGrupo_input">
+                                    <input type="checkbox" name="alumnosSinGrupo" id="alumno2" value="2">
+                                </div>
+                                <div class="listaGrupo_label">
+                                    <label for="alumno2">Alumno 1Alumno 1Alumno 1</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="listaGrupo_input">
+                                    <input type="checkbox" name="alumnosSinGrupo" id="alumno2" value="2">
+                                </div>
+                                <div class="listaGrupo_label">
+                                    <label for="alumno3">Alumno 1Alumno 1Alumno 1</label>
+                                </div>
+                            </li>
+                            <!-- Agrega más elementos <li> según sea necesario para cada alumno -->
+                        </ul>
+                    </div>
+                    <button id="agregarAlumnosGrupo">
+                        <div class="btn_estado estado1">
+                            <div class="btnGrupo_icons">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                </svg>
+                            </div>
+                            Agregar
+                        </div>
+                    </button> 
+                </div>
+            </section>
+            <div class="eliminarSeleccionados hide">
+                <div class="eliminarSeleccionados_span">
+                    <span>0</span>
+                </div>
+                <a id="eliminarGrupoBtn_seleccion">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div id="Materias" class="tab-content hide">
+            <h1>MATERIAS</h1>
+        </div>
+        
+        <div id="Calificaciones" class="tab-content hide">
+            <h1>CALIFICACIONES</h1>
+        </div>
+    </main>
+
+    <script src="script_CRUD.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>
