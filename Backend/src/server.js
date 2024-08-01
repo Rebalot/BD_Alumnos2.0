@@ -5,7 +5,7 @@ const app = express();
 const colors = require('colors');
 const PORT = 3000;
 const Alumno = require('../functions/classAlumno');
-const { calcularEdad, generarMatricula } = require('../functions/utilidades');
+const { calcularEdad, generarMatricula, concatenarNombreCompleto } = require('../functions/utilidades');
 const Grupo = require('../functions/classGrupo');
 
 const cors = require('cors');
@@ -13,7 +13,7 @@ const corsOptions = {
     origin: 'http://127.0.0.1:5500',
 };
 
-//Middleware por si el servidor sirviera el frontend
+//Middleware por si este servidor sirviera el frontend también
 // const publicDirectoryPath = path.join(__dirname, '../../Frontend')
 // app.use(express.static(publicDirectoryPath));
 
@@ -29,20 +29,40 @@ let bdAlumnos = JSON.parse(fs.readFileSync(bdAlumnosPath, 'utf8'));
 // Ruta para obtener todos los alumnos
 app.get('/alumnos', (req, res) => {
     const name = req.query.name;
+    const grupo = req.query.grupo; // 'true' o 'false'
+
     try {
         bdAlumnos = JSON.parse(fs.readFileSync(bdAlumnosPath, 'utf8'));
-        // console.log(name);
-        if (!name) {
-            // console.log(bdAlumnos.alumnos);
-            res.json(bdAlumnos.alumnos);
-        }else{
-            const nombreBuscado = bdAlumnos.alumnos.filter((alumno) => {
-                const nombreCompleto = `${alumno.nombre} ${alumno.apellido1} ${alumno.apellido2}`
-                return nombreCompleto.toLocaleLowerCase().includes(name.toLocaleLowerCase())
-            });
         
-            res.json(nombreBuscado);
+        bdAlumnos.alumnos.map(data => new Alumno(
+            data.matricula,
+            data.nombre,
+            data.apellido1,
+            data.apellido2,
+            data.fechaNacimiento,
+            data.edad,
+            data.grupo,
+            data.materias,
+            data.calificaciones
+        ));
+
+        let alumnosFiltrados = bdAlumnos.alumnos;
+
+        if (grupo === 'true') { //true los que tienen grupo asignado
+            alumnosFiltrados = alumnosFiltrados.filter(alumno => alumno.grupo !== 'N/A');
+        } else if (grupo === 'false') { //false los que no tienen grupo asignado
+            alumnosFiltrados = alumnosFiltrados.filter(alumno => alumno.grupo === 'N/A');
         }
+
+        // Filtrar por nombre
+        if (name) {
+            alumnosFiltrados = alumnosFiltrados.filter(alumno => {
+                const nombreCompleto = concatenarNombreCompleto(alumno);
+                return nombreCompleto.toLocaleLowerCase().includes(name.toLocaleLowerCase());
+            });
+        }
+
+        res.json(alumnosFiltrados);
 
     } catch (err) {
         console.error('Error al leer archivo de datos:', err);
@@ -57,7 +77,7 @@ app.get('/alumnos/:matricula', (req, res) => {
         bdAlumnos = JSON.parse(fs.readFileSync(bdAlumnosPath, 'utf8'));
         const alumnoEncontrado = bdAlumnos.alumnos.find(alumno => alumno.matricula === matricula);
         if (alumnoEncontrado) {
-            console.log(`Alumno con matrícula ${alumnoEncontrado.matricula} buscado correctamente`);
+            console.log(`Alumno con matrícula ${alumnoEncontrado.matricula} encontrado correctamente`);
             res.json(alumnoEncontrado);
         } else {
             res.status(404).json({ error: 'Alumno no encontrado' });
@@ -67,6 +87,7 @@ app.get('/alumnos/:matricula', (req, res) => {
         res.status(500).json({ error: 'Error al obtener datos de alumnos' });
     }
 });
+
 // Ruta para agregar un alumno
 app.post('/alumnos', (req, res) => {
     console.log(req.body)
@@ -168,11 +189,24 @@ function obtenerMatriculaMasAlta() {
     }
     }
 /////////////////////////////////////////
-app.get('/grupos', (req, res) => {
+app.get('/grupos/:grupo?', (req, res) => {
+    const { grupo } = req.params;
     try {
+        let resultado
         bdAlumnos = JSON.parse(fs.readFileSync(bdAlumnosPath, 'utf8'));
+        bdAlumnos.grupos.map(data => new Grupo(
+            data.nombre,
+            data.alumnos,
+            data.length
+        ));
 
-        res.json(bdAlumnos.grupos);
+        bdAlumnos.grupos.sort((a, b) => a.nombre.localeCompare(b.nombre)); //orden alfabético
+        if(grupo){
+            resultado = [bdAlumnos.grupos.find(grupoObject => grupoObject.nombre === grupo)];
+        }else{
+            resultado = bdAlumnos.grupos;
+        }
+        res.json(resultado);
     } catch (err) {
         console.error('Error al leer archivo de datos:', err);
         res.status(500).json({ error: 'Error al obtener grupos' });

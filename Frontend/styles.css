@@ -35,28 +35,70 @@ nav{
     width: 100%;
     margin: 0 10px;
 }
+body{
+    /* overflow: hidden; */
+}
 main{
     margin-top: 150px;
     display: flex;
     padding: 0 80px 20px 80px;
-    min-width: fit-content;
-    min-height: fit-content;
+    min-width: 845px;
+    min-height: calc(100vh - 150px);
+    
 }
 .tab-content{
-    min-width: 750px;
-    max-width: 100%;
+    /* min-width: 750px;
+    max-width: 100%; */
+    width: 100%;
     flex: 1;
+    max-height: calc(100vh - 170px);
+    min-width: 760px;
+    display: flex;
+    flex-direction: column;
 }
-#Alumnos section{
+.tabla_alumnos{
     overflow-x: auto;
-    max-width: 100%;
 }
+
+#tabla_alumnos{
+    border-spacing: 0 !important;
+    border-collapse: separate !important;
+}
+
+#tabla_alumnos thead{
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: rgb(31 41 55);
+}
+#tabla_alumnos thead th{
+    border-color: white;
+    border-bottom: 3px solid white;
+}
+
+#tabla_alumnos tr{
+    /* border: none !important; */
+} 
+#tabla_alumnos tbody{
+    /* border-top: 3px solid white; */
+    /* display: block;
+    height: 200px;
+    overflow-y: auto;
+    width: 100%; */
+}
+
+/* #tabla_alumnos tbody::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+} */
+
 .tabla_buscador{
     height: 73px;
     padding: 16px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     background-color: rgb(31 41 55);
+    border-bottom: 3px solid white;
 }
 .busqueda_filtro{
     display: flex;
@@ -184,10 +226,13 @@ main{
     white-space: nowrap;
     min-width: 150px;
 }
+
 .table{
     background-color: rgb(31 41 55);
     white-space: nowrap;
+    margin-bottom: 0 !important;
 }
+
 .bg-warning{
     background-color: rgb(75 85 99) !important;
 }
@@ -343,27 +388,34 @@ tbody tr th,td{
 .grupos{
     display: flex;
     flex-direction: column;
-    /* margin-top: 50px; */
+    margin-top: 40px;
 }
 .grupos_grid{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     column-gap: 30px;
     row-gap: 30px;
     position: relative;
     width: 100%;
 }
+.grupo_informacion{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+}
 .grupo_contenedor{
     background-color: rgb(47, 58, 83);
-    width: 260px;
-    height: 300px;
+    width: 220px;
+    height: 260px;
     color: white;
     border-radius: 10px;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
     position: relative;
-    display: grid;
-    justify-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .grupo_contenedor:hover{
@@ -372,10 +424,14 @@ tbody tr th,td{
 .grupo_letra{
     font-size: 150px;
     font-weight: 700;
-    height: 240px;
+    position: relative;
+    top: -10px;
 }
 .grupo_cantidadAlumnos{
-    padding: 10px 20px;
+    padding-bottom: 30px;
+}
+.grupo_cantidadAlumnos p{
+    margin: 0;
 }
 .grupoEliminar{
     position: absolute;
@@ -394,9 +450,7 @@ tbody tr th,td{
 .checkboxEliminar label{
     margin: 0;
 }
-.grupo_informacion{
-    margin-left: 100px;
-}
+
 .eliminarSeleccionados{
     position: fixed;
     background-color: red;
@@ -428,44 +482,41 @@ tbody tr th,td{
 #eliminarGrupoBtn_seleccion{
     margin-top: 3px;
 }
-.alumnosSinGrupo {
-    margin-top: 20px;
+.alumnosSinGrupo{
 }
-.alumnosSinGrupo h4{
-    padding-bottom: 5px;
-}
-.alumnosSinGrupo_lista {
-    list-style-type: none;
-}
-.alumnosSinGrupo_lista li{
+.alumnosSinGrupo_sup{
     display: flex;
-    font-size: 18px;
-    height: 35px;
-    border-bottom: 1px solid;
+    justify-content: space-between;
+    align-items: center;
 }
+.alumnosSinGrupo_sup button .btn_estado{
+    padding: 3px 5px 3px 2px;
+}
+#alumnosSinGrupo_lista {
+    color: white;
+    max-width: 650px;
+}
+#alumnosSinGrupo_lista tr, td, th{
+    border-right: 1px solid white;
+}
+
 .listaGrupo_input{
-    height: 100%;
-    width: 35px;
-    padding: 4px;
-    border-right: 1px solid;
+    height: 20px;
+    width: 20px;
+    display: flex;
 }
 .listaGrupo_input input{
     height: 100%;
     width: 100%;
-    border-radius: 50%;
-    /* -webkit-appearance: none; */
 }
-.alumnosSinGrupo_lista label{
-    border-left: 1px solid;
-    margin: 0;
-    padding: 3px 10px 0;
-    background-color: rgb(74, 91, 104);
-    color: white;
-    height: 100%;
-    border-bottom: 1px solid;
-}
+
 @media screen and (max-width: 1250px) {
     main{
         padding: 0 40px 20px 40px;
     }
+}
+@media screen and (max-width: 840px) {
+    /* .tab-content{
+        margin-right: 20px;
+    } */
 }

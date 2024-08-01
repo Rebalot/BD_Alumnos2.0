@@ -6,7 +6,7 @@ class Alumno {
         this.apellido2 = apellido2;
         this.fechaNacimiento = fechaNacimiento;
         this.edad = edad;
-        this.grupo = '';
+        this.grupo = 'N/A';
         this.materias = [];
         this.calificaciones = {}
     }

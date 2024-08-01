@@ -18,6 +18,7 @@ async function obtenerYMostrarAlumnos(alumnoBuscado) {
         }
         const alumnosObtenidos = await response.json();
         mostrarAlumnosEnTabla(alumnosObtenidos);
+        alumnos = alumnosObtenidos;
         console.log('Alumnos obtenidos correctamente: ', alumnosObtenidos);
     } catch (error) {
         console.error('Error al obtener y mostrar alumnos:', error);
@@ -76,7 +77,7 @@ function mostrarAlumnosEnTabla(alumnos) {
                 <td class="row_data align-middle" col_name="apellido2">${alumno.apellido2}</td>
                 <td class="row_data align-middle" col_name="fechaNacimiento">${alumno.fechaNacimiento}</td>
                 <td class="align-middle" col_name="edad">${alumno.edad}</td>
-                <td class="align-middle" col_name="grupo"><a href="">N/A</a></td>
+                <td class="align-middle" col_name="grupo"><a href="">${alumno.grupo}</a></td>
                 <td class="align-middle" col_name="materias"><a href="">N/A</a></td>
                 <td class="align-middle" col_name="calificaciones"><a href="">N/A</a></td>
                 <td class="row_edit">
@@ -136,6 +137,41 @@ async function editarAlumno(matricula, datosAlumno) {
         console.error(`Error al modificar alumno con matrícula ${matricula}:`, error);
     }
 }
+
+async function obtenerAlumnosGrupoStatus(status) {
+    const newUrl = `${urlAlumnos}?grupo=${status}`; // Si grupo true, solicita los alumnos con grupo. Si grupo false, solicita los alumnos sin grupo
+    try {
+        const response = await fetch(newUrl);
+        if (!response.ok) {
+            throw new Error('Error al obtener la lista de status grupo de alumnos');
+        }
+        const alumnosObtenidos = await response.json();
+        mostrarAlumnosGrupoEnLista(alumnosObtenidos);
+        console.log('Status grupo de alumnos obtenido correctamente: ', alumnosObtenidos);
+    } catch (error) {
+        console.error('Error al obtener y mostrar status grupo de alumnos:', error);
+    }
+}
+function mostrarAlumnosGrupoEnLista(alumnos) {
+    const listaContenedor = document.querySelector('#alumnosSinGrupo_lista tbody'); //tabla
+    listaContenedor.innerHTML = ''; // Limpiar la tabla antes de mostrar los nuevos datos
+
+    alumnos.forEach(alumno => {
+        listaContenedor.insertAdjacentHTML('beforeend', `
+            <tr row_id='${alumno.matricula}'>
+                <th scope="row" class="row_data align-middle" col_name="checkbox">
+                    <div class="listaGrupo_input">
+                        <input type="checkbox" name="alumnosSinGrupo" id="${alumno.matricula}_listaSinGrupo" value="${alumno.matricula}">
+                    </div>
+                </th>
+                <td class="row_data align-middle" col_name="matricula">${alumno.matricula}</td>
+                <td class="row_data align-middle" col_name="nombre">${alumno.nombre}</td>
+                <td class="row_data align-middle" col_name="apellido1">${alumno.apellido1}</td>
+                <td class="row_data align-middle" col_name="apellido2">${alumno.apellido2}</td>
+            </tr>
+        `);
+    });
+}
     
 ///////////////////////////////////
 function pausa(ms) {
@@ -145,7 +181,7 @@ function pausa(ms) {
 ocultarMostrar('.agregar_alumno button', '.agregar_alumno_datos')
 
 tabActive('#navTabs ul', 'li', '.tab-content')
-mainSection(2, '.tab-content');
+mainSection(1, '.tab-content');
 
 function mainSection(indice, sectionDiv){
     const sections = document.querySelectorAll(sectionDiv)
@@ -396,10 +432,11 @@ async function generarAlumnoAleatorio(event){
 const urlGrupos = `${urlSrc}/grupos`;
 //grupos status
 let grupos = [];
-async function obtenerYMostrarGrupos() {
-    console.log(`URL: ${urlGrupos}`);
+async function obtenerYMostrarGrupos(grupoBuscado) {
+    const newUrl = !grupoBuscado ? urlGrupos : `${urlGrupos}/${grupoBuscado}`;
+    console.log(`newURL: ${newUrl}`);
     try {
-        const response = await fetch(urlGrupos);
+        const response = await fetch(newUrl);
         if (!response.ok) {
             throw new Error('Error al obtener la lista de grupos');
         }
@@ -438,15 +475,15 @@ const crearGrupoBtnSup = document.getElementById('crearGrupoBtn_sup'),
 
 function mostrarGruposGrid(grupos) {
     const gruposContenedor = document.querySelector('.grupos_grid');
-    const noExisteLabel = document.querySelector('.crearGrupo_noExiste_label');     
+    const grupoUnderlineSec = document.querySelector('.grupoUnderline')     
     
         gruposContenedor.innerHTML = '';
 
     if(grupos.length === 0){
-        noExisteLabel.classList.remove('hidden');
+        grupoUnderlineSec.classList.remove('hide');
         eliminarGrupoBtnSup.disabled = true;
     }else{
-        noExisteLabel.classList.add('hidden');
+        grupoUnderlineSec.classList.add('hide');
         if(selectorDropdown.classList.contains('hide')){
             eliminarGrupoBtnSup.disabled = false;
         }
@@ -492,7 +529,7 @@ async function eliminarGrupos(grupos) {
     }
 }
 async function confirmarEliminarGrupos(arrayGrupos) {
-    if (confirm(`¿Estás seguro de eliminar los grupos ${arrayGrupos.join(', ')}?`)) {
+    if (confirm(`¿Estás seguro de eliminar grupo(s) ${arrayGrupos.join(', ')}?`)) {
         await eliminarGrupos(arrayGrupos);
     }
 }
@@ -555,9 +592,8 @@ function crearGrupoDropdown(){
 const gruposSec = document.querySelector('.grupos'),
     gruposGrid = gruposSec.querySelector('.grupos_grid'),
     grupoInfoSec = gruposSec.querySelector('.grupo_informacion'),
-    btnRegresar = document.getElementById('cancelarRegresarBtn'),
-    btnsSup = document.querySelector('.botones_sup');
-
+    btnRegresar = document.getElementById('regresarGrupoBtn_sup'),
+    grupoHeaderH1 = document.querySelector('#Grupos header h1');
 //Interacción de tarjetas de Grupos
 gruposGrid.addEventListener('click', async function(event) {
     const grupoContenedorActual = event.target.closest('.grupo_contenedor'),
@@ -566,25 +602,32 @@ gruposGrid.addEventListener('click', async function(event) {
     // event.preventDefault();
     
     if(!grupoEliminarContenedor && grupoContenedorActual !== null){
+        const letraGrupoActual = grupoContenedorActual.querySelector('.grupo_letra span').innerText
+        
+        await obtenerAlumnosGrupoStatus(false)
 
-        gruposSec.style.margin = 0;
-
-        btnsSup.classList.add('hide');
-        btnRegresar.classList.remove('hidden');
+        crearGrupoBtnSup.classList.add('hide');
+        eliminarGrupoBtnSup.classList.add('hide');
+        grupoHeaderH1.innerText = `Grupo "${letraGrupoActual}" | Información`;
+        btnRegresar.classList.remove('hide');
 
         grupoContenedores.forEach(contenedor => {
             if(contenedor !== grupoContenedorActual){
                 contenedor.classList.remove('active');
-                contenedor.classList.add('hide');
             }
             if(contenedor === grupoContenedorActual){
                 contenedor.classList.add('active');
-                gruposSec.style.flexDirection = 'row';
-                gruposGrid.style.width = 'auto';
-                grupoInfoSec.classList.remove('hide');
+                
             }
-            
-        })
+        });
+
+        gruposGrid.classList.add('hide');
+        await obtenerYMostrarGrupos(letraGrupoActual);
+        const grupoActual = grupos[0]; //objeto del grupo actual
+
+        
+        grupoInfoSec.classList.remove('hide');
+
     }else if(grupoEliminarContenedor){
         const eliminarSpan = document.querySelector('.eliminarSeleccionados_span span');
         const checkboxEliminar = grupoEliminarContenedor.querySelector('input');
@@ -597,13 +640,17 @@ gruposGrid.addEventListener('click', async function(event) {
         }
     }
 });
+
+
+
 btnRegresar.addEventListener('click', regresarAGruposGrid);
 function regresarAGruposGrid(){
-    gruposSec.style.flexDirection = 'column';
-    gruposGrid.style.width = '100%';
+    grupoHeaderH1.innerText = 'GRUPOS';
+    gruposGrid.classList.remove('hide');
     grupoInfoSec.classList.add('hide');
-    btnRegresar.classList.add('hidden');
-    btnsSup.classList.remove('hide');
+    btnRegresar.classList.add('hide');
+    crearGrupoBtnSup.classList.remove('hide');
+    eliminarGrupoBtnSup.classList.remove('hide');
     obtenerYMostrarGrupos();
 }
 
@@ -677,6 +724,29 @@ async function trashBtnEvent(){
     
 }
 
+//Gráfico rendimiento alumnos
+const ctx = document.getElementById('alumnosGrupo_rendimiento').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'bar', // Tipo de gráfico
+    data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'], // Etiquetas del eje x
+        datasets: [{
+            label: 'My First Dataset', // Etiqueta del conjunto de datos
+            data: [12, 19, 3, 5, 2, 3, 7], // Datos del gráfico
+            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Color de fondo
+            borderColor: 'rgba(75, 192, 192, 1)', // Color del borde
+            borderWidth: 1 // Ancho del borde
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true // Comenzar el eje y en cero
+            }
+        }
+    }
+});
+
 document.addEventListener('click', clickEnDocumento);
 function clickEnDocumento(event){
 
@@ -685,6 +755,9 @@ function clickEnDocumento(event){
         crearGrupoDropdown();
     }
 }
+
+
+
 
 // {
 //     "nombre": "A",

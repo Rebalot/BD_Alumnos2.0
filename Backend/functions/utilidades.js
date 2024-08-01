@@ -12,11 +12,14 @@ function calcularEdad(fechaNacimientoValue) {
 }
 function generarMatricula(matriculas){
     let matriculaString = (matriculas + 1).toString().padStart(4, '0');
-    return matriculaString
-
+    return matriculaString;
 }
-
+function concatenarNombreCompleto(alumno){
+    //objeto del alumno con todas sus propiedades
+    return `${alumno.nombre} ${alumno.apellido1} ${alumno.apellido2}`;
+}
 module.exports = {
     calcularEdad,
     generarMatricula,
+    concatenarNombreCompleto
 };
